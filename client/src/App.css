@@ -23,6 +23,26 @@
 }
 
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.horizontal-list {
+  list-style: none;
+}
+
+.horizontal-list > li {
+  float: left;
+  display: inline;
+  margin: 0px 5px;
+}
+
+.card {
+  height: 360px;
+  width: 200px;
+  padding-bottom: 30px;
 }
