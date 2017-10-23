@@ -27,7 +27,7 @@ const StreamContainer = class extends Component {
       return <h3>{this.props.errorMessage}</h3>;
     }
 
-    if (this.props.noTripsAvailable) {
+    if (this.props.noPagesAvailable) {
       return <h3>No streams available</h3>;
     }
 

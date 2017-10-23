@@ -1,40 +1,40 @@
 import {
-  PAGES_FETCH_DATA_SUCCESS,
-  NO_PAGES_AVAILABLE,
-  PAGES_HAS_ERRORED,
-  PAGES_HAS_ERROR_MESSAGE
-} from "../reducers/stream-reducer";
+  STREAMS_FETCH_DATA_SUCCESS,
+  NO_STREAMS_AVAILABLE,
+  PAGE_DETAILS_HAS_ERRORED,
+  PAGE_DETAILS_HAS_ERROR_MESSAGE
+} from "../reducers/page-reducer";
 
 function pagesHasErrored(hasError) {
   return {
-    type: PAGES_HAS_ERRORED,
+    type: PAGE_DETAILS_HAS_ERRORED,
     payload: { hasError }
   };
 }
 
 function pagesHasErrorMessage(errorMessage) {
   return {
-    type: PAGES_HAS_ERROR_MESSAGE,
+    type: PAGE_DETAILS_HAS_ERROR_MESSAGE,
     payload: { errorMessage }
   };
 }
 
-function noPagesAvailable(noPagesAvailable) {
+function noPagesAvailable(noStreamsAvailable) {
   return {
-    type: NO_PAGES_AVAILABLE,
-    payload: { noPagesAvailable }
+    type: NO_STREAMS_AVAILABLE,
+    payload: { noStreamsAvailable }
   };
 }
 
-function pageDetails(pages) {
+function streamDetails(streams) {
   return {
-    type: PAGES_FETCH_DATA_SUCCESS,
-    payload: { pages }
+    type: STREAMS_FETCH_DATA_SUCCESS,
+    payload: { streams }
   };
 }
 
-function fetchTotalPages(type) {
-  const tripsPath = `/api/${type}`;
+function fetchStreamsForPage(page) {
+  const tripsPath = `/api/${page}`;
   const errorMessage = "Failed to fetch stream pages.";
 
   return fetch(tripsPath, {
@@ -48,13 +48,13 @@ function fetchTotalPages(type) {
   });
 }
 
-export function fetchPages(type) {
+export function fetchPageDetails(page) {
   return dispatch => {
-    fetchTotalPages(type)
-      .then(pages => {
-        let notAvailable = pages.length === 0;
+    fetchStreamsForPage(page)
+      .then(streams => {
+        let notAvailable = streams.length === 0;
         dispatch(noPagesAvailable(notAvailable));
-        dispatch(pageDetails(pages));
+        dispatch(streamDetails(streams));
       })
       .catch(errorMessage => {
         dispatch(pagesHasErrored(true));

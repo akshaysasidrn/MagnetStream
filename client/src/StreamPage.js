@@ -3,32 +3,32 @@ import React, { Component } from "react";
 import StreamDetail from "./StreamDetail";
 import CircularProgress from "material-ui/CircularProgress";
 
+import { connect } from "react-redux";
+import { fetchPageDetails } from "./actions/StreamPage";
+
 const StreamPage = class extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      list: []
-    };
-  }
-
-  fetchStreamDetails = page => {
-    fetch(`/api/${page}`)
-      .then(res => res.json())
-      .then(list => this.setState({ list }));
-  };
-
   componentDidMount() {
-    this.fetchStreamDetails(this.props.page);
+    this.props.fetchPageDetails(this.props.page);
   }
 
   componentWillReceiveProps(nextProps) {
-    this.fetchStreamDetails(nextProps.page);
+    if (this.props.page !== nextProps.page) {
+      this.props.fetchPageDetails(nextProps.page);
+    }
   }
 
   render() {
-    return this.state.list.length ? (
+    if (this.props.hasError) {
+      return <h3>{this.props.errorMessage}</h3>;
+    }
+
+    if (this.props.noStreamsAvailable) {
+      return <h3>No streams for this page </h3>;
+    }
+
+    return this.props.streams.length ? (
       <ul className="horizontal-list">
-        {this.state.list.map(stream => (
+        {this.props.streams.map(stream => (
           <li key={stream._id}>
             <StreamDetail stream={stream} />
           </li>
@@ -39,4 +39,19 @@ const StreamPage = class extends Component {
     );
   }
 };
-export default StreamPage;
+
+function mapStateToProps(state) {
+  return {
+    streams: state.page.streams,
+    hasError: state.page.hasError,
+    errorMessage: state.page.errorMessage.message,
+    noStreamsAvailable: state.page.noStreamsAvailable,
+    currentPage: state.page.currentPage
+  };
+}
+
+const mapDispatchToProps = {
+  fetchPageDetails
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(StreamPage);
