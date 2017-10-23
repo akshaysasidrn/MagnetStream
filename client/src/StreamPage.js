@@ -11,10 +11,18 @@ const StreamPage = class extends Component {
     };
   }
 
-  componentDidMount() {
-    fetch(`/api/${this.props.page}`)
+  fetchStreamDetails = page => {
+    fetch(`/api/${page}`)
       .then(res => res.json())
       .then(list => this.setState({ list }));
+  };
+
+  componentDidMount() {
+    this.fetchStreamDetails(this.props.page);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.fetchStreamDetails(nextProps.page);
   }
 
   render() {

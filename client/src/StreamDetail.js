@@ -1,11 +1,12 @@
 import React from "react";
 import {
   Card,
-  CardActions,
+  // CardActions,
   CardMedia,
   CardTitle,
   CardText
 } from "material-ui/Card";
+// import FlatButton from "material-ui/FlatButton";
 
 const StreamDetail = props => {
   return (

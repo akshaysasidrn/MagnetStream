@@ -8,9 +8,7 @@ import StreamContainer from "./StreamContainer";
 
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
-import FlatButton from "material-ui/FlatButton";
-
-import logo from "./logo.svg";
+// import logo from "./logo.svg";
 import "./App.css";
 
 class App extends Component {
@@ -30,10 +28,10 @@ class App extends Component {
                   <Link to="/stream/movies">Movies</Link>
                 </li>
                 <li>
-                  <Link to="/stream/animes">Animes</Link>
+                  <Link to="/stream/shows">Shows</Link>
                 </li>
                 <li>
-                  <Link to="/stream/shows">Shows</Link>
+                  <Link to="/stream/animes">Animes</Link>
                 </li>
               </ul>
             </div>
