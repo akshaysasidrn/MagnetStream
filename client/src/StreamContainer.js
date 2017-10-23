@@ -3,39 +3,38 @@ import React, { Component } from "react";
 import StreamPage from "./StreamPage";
 import CircularProgress from "material-ui/CircularProgress";
 
-const StreamContainer = class extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      pages: [],
-      currentPage: 0
-    };
-  }
+import { connect } from "react-redux";
+import { fetchPages } from "./actions/StreamContainer";
 
+const StreamContainer = class extends Component {
   componentDidMount() {
     // landing on root path by default renders movies
     let type = "movies";
     if (this.props.match.params.type) {
       type = this.props.match.params.type;
     }
-    fetch(`/api/${type}`)
-      .then(res => res.json())
-      .then(pages => this.setState({ pages }));
+    this.props.fetchPages(type);
   }
 
   componentWillReceiveProps(nextProps) {
-    fetch(`/api/${nextProps.match.params.type}`)
-      .then(res => res.json())
-      .then(pages => {
-        this.setState({ pages });
-      });
+    if (this.props.match.params.type !== nextProps.match.params.type) {
+      this.props.fetchPages(nextProps.match.params.type);
+    }
   }
 
   render() {
-    return this.state.pages.length ? (
+    if (this.props.hasError) {
+      return <h3>{this.props.errorMessage}</h3>;
+    }
+
+    if (this.props.noTripsAvailable) {
+      return <h3>No streams available</h3>;
+    }
+
+    return this.props.pages.length ? (
       <div>
         {this.props.match.type}
-        <StreamPage page={this.state.pages[this.state.currentPage]} />
+        <StreamPage page={this.props.pages[this.props.currentPage]} />
       </div>
     ) : (
       <CircularProgress />
@@ -43,4 +42,18 @@ const StreamContainer = class extends Component {
   }
 };
 
-export default StreamContainer;
+function mapStateToProps(state) {
+  return {
+    pages: state.stream.pages,
+    hasError: state.stream.hasError,
+    errorMessage: state.stream.errorMessage.message,
+    noPagesAvailable: state.stream.noPagesAvailable,
+    currentPage: state.stream.currentPage
+  };
+}
+
+const mapDispatchToProps = {
+  fetchPages
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(StreamContainer);
