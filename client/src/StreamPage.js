@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import StreamDetail from "./StreamDetail";
+import StreamCard from "./StreamCard";
 import CircularProgress from "material-ui/CircularProgress";
 
 import { connect } from "react-redux";
@@ -17,6 +17,11 @@ const StreamPage = class extends Component {
     }
   }
 
+  handleClick = stream => {
+    // push state
+    this.props.history.push(`/${this.props.type}/${stream.imdb_id}`);
+  };
+
   render() {
     if (this.props.hasError) {
       return <h3>{this.props.errorMessage}</h3>;
@@ -30,7 +35,10 @@ const StreamPage = class extends Component {
       <ul className="horizontal-list">
         {this.props.streams.map(stream => (
           <li key={stream._id}>
-            <StreamDetail stream={stream} />
+            <StreamCard
+              handleClick={() => this.handleClick(stream)}
+              stream={stream}
+            />
           </li>
         ))}
       </ul>
@@ -42,7 +50,7 @@ const StreamPage = class extends Component {
 
 function mapStateToProps(state) {
   return {
-    streams: state.page.streams,
+    streams: Object.values(state.page.streams),
     hasError: state.page.hasError,
     errorMessage: state.page.errorMessage.message,
     noStreamsAvailable: state.page.noStreamsAvailable,

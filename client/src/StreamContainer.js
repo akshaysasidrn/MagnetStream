@@ -9,12 +9,16 @@ import { fetchPages } from "./actions/StreamContainer";
 const StreamContainer = class extends Component {
   componentDidMount() {
     // landing on root path by default renders movies
+    this.props.fetchPages(this.fetchType());
+  }
+
+  fetchType = () => {
     let type = "movies";
     if (this.props.match.params.type) {
       type = this.props.match.params.type;
     }
-    this.props.fetchPages(type);
-  }
+    return type;
+  };
 
   componentWillReceiveProps(nextProps) {
     if (this.props.match.params.type !== nextProps.match.params.type) {
@@ -34,7 +38,11 @@ const StreamContainer = class extends Component {
     return this.props.pages.length ? (
       <div>
         {this.props.match.type}
-        <StreamPage page={this.props.pages[this.props.currentPage]} />
+        <StreamPage
+          page={this.props.pages[this.props.currentPage]}
+          history={this.props.history}
+          type={this.fetchType()}
+        />
       </div>
     ) : (
       <CircularProgress />

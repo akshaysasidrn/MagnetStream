@@ -27,9 +27,11 @@ function noPagesAvailable(noStreamsAvailable) {
 }
 
 function streamDetails(streams) {
+  let streamsForPage = {};
+  streams.forEach(stream => (streamsForPage[stream.imdb_id] = stream));
   return {
     type: STREAMS_FETCH_DATA_SUCCESS,
-    payload: { streams }
+    payload: { streams: streamsForPage }
   };
 }
 

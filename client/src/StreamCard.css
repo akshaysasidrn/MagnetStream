@@ -1,0 +1,16 @@
+.stream-card {
+  height: 360px;
+  width: 200px;
+  padding: 10px;
+  text-align: center;
+}
+
+.stream-card-title {
+  font-size: 14px;
+  padding: 14px;
+  height: 30px;
+}
+.stream-card-poster {
+  height: 290px;
+  width: 200px;
+}

@@ -5,6 +5,7 @@ import getMuiTheme from "material-ui/styles/getMuiTheme";
 
 import NoMatch from "./NoMatch";
 import StreamContainer from "./StreamContainer";
+import MovieDetail from "./StreamDetail";
 
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
@@ -34,6 +35,7 @@ const App = () => (
           <Switch>
             <Route exact path="/" component={StreamContainer} />
             <Route exact path="/stream/:type" component={StreamContainer} />
+            <Route exact path="/movies/:id" component={MovieDetail} />
             <Route component={NoMatch} />
           </Switch>
         </div>
