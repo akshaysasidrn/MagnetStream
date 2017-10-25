@@ -18,7 +18,6 @@ const StreamPage = class extends Component {
   }
 
   handleClick = stream => {
-    // push state
     this.props.history.push(`/${this.props.type}/${stream.imdb_id}`);
   };
 
@@ -43,7 +42,9 @@ const StreamPage = class extends Component {
         ))}
       </ul>
     ) : (
-      <CircularProgress />
+      <div className="progress">
+        <CircularProgress />
+      </div>
     );
   }
 };

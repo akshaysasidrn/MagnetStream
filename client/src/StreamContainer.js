@@ -45,7 +45,9 @@ const StreamContainer = class extends Component {
         />
       </div>
     ) : (
-      <CircularProgress />
+      <div className="progress">
+        <CircularProgress />
+      </div>
     );
   }
 };

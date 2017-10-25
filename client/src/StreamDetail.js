@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Paper from "material-ui/Paper";
+import "./StreamDetail.css";
 
 const style = {
   height: "auto",
@@ -17,27 +18,24 @@ const MovieDetail = class extends Component {
 
     const torrents = Object.keys(stream.torrents.en).map(quality => (
       <div>
-        {quality}:{" "}
-        <a href={stream.torrents.en[quality].url}>
-          {stream.torrents.en[quality].url}
-        </a>
+        {quality}: <a href={stream.torrents.en[quality].url}> magnetic link</a>
       </div>
     ));
 
     const genres = stream.genres.map(genre => <span>#{genre} </span>);
     return (
       <Paper style={style} zDepth={3} rounded={false}>
-        <div>
+        <div className="stream-detail">
           <img className="poster" src={stream.images.fanart} alt="" />
           <h3>
             {stream.title} ({stream.year})
           </h3>
-          {genres}
           <div>Rating: {stream.rating.percentage}%</div>
+          {genres}
           <div>Runtime: {stream.runtime} minutes</div>
-          <a href={stream.trailer}>Trailer</a>
           <div>{stream.synopsis}</div>
           <hr />
+          <a href={stream.trailer}>Play trailer</a>
           {torrents}
         </div>
       </Paper>

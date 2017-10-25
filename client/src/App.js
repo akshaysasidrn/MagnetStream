@@ -6,8 +6,9 @@ import getMuiTheme from "material-ui/styles/getMuiTheme";
 import NoMatch from "./NoMatch";
 import StreamContainer from "./StreamContainer";
 import MovieDetail from "./StreamDetail";
+import Navbar from "./Navbar";
 
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 // import logo from "./logo.svg";
 import "./App.css";
@@ -21,17 +22,7 @@ const App = () => (
     <Router>
       <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
         <div className="App">
-          <div>
-            <ul className="horizontal-list">
-              <li>
-                <Link to="/stream/movies">Movies</Link>
-              </li>
-              <li>
-                <Link to="/stream/shows">Shows</Link>
-              </li>
-            </ul>
-          </div>
-          <br />
+          <Navbar />
           <Switch>
             <Route exact path="/" component={StreamContainer} />
             <Route exact path="/stream/:type" component={StreamContainer} />
